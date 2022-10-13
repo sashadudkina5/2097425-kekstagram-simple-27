@@ -42,16 +42,12 @@ const getNumber = (a, b) => {
   return Math.floor(result);
 };
 
-const createPhotoObject = () => {
-  return {
-    id: getNumber(1, 25),
-    url: `photos/${getNumber(1, 25)}.jpg`,
-    description: 'Описание фотографии',
-    likes: getNumber(15, 200),
-    comments: getNumber(0, 200)
-  };
-};
+const createPhotoObject = () => ({
+  id: getNumber(1, 25),
+  url: `photos/${getNumber(1, 25)}.jpg`,
+  description: 'Описание фотографии',
+  likes: getNumber(15, 200),
+  comments: getNumber(0, 200)
+});
 
 const similarPhotoObjects = Array.from({length: SIMILAR_PHOTO_OBJECTS_COUNT}, createPhotoObject);
-
-console.log(similarPhotoObjects);
