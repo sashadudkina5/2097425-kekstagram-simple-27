@@ -10,4 +10,10 @@ const getRandomNumber = (a, b) => {
   return Math.floor(result);
 };
 
-export {getRandomNumber};
+const isEscapeKey = function (evt) {
+  if (evt.key === 'Escape') {
+    return true;
+  }
+};
+
+export {getRandomNumber, isEscapeKey};
