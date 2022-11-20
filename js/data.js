@@ -15,5 +15,3 @@ const createPhotoObject = () => ({
 // функция, генерирующая 25 массивов случайных фото-объектов
 
 const createSimilarPhotoObjects = () => Array.from({length: SIMILAR_PHOTO_OBJECTS_COUNT}, createPhotoObject);
-
-export {createSimilarPhotoObjects};

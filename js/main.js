@@ -1,2 +1,5 @@
 import './miniatures.js';
-import './uploader.js';
+import {setFormSubmit, closeUploaderFrom} from './uploader.js';
+import './data.js';
+
+setFormSubmit (closeUploaderFrom);
