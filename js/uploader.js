@@ -81,7 +81,6 @@ scaleBigger.addEventListener('click', () => {
 // Наложение эффекта на фото
 
 const chosenEffectRadios = document.querySelectorAll('.effects__radio');
-const effectsList = document.querySelector('.effects__list');
 
 
 for (const radio of chosenEffectRadios) {
