@@ -1,12 +1,4 @@
-import {isEscapeKey} from './util.js';
-
-const imgUploadPreview = document.querySelector('.img-upload__preview');
-
-const uploadPhotoInput = document.querySelector('#upload-file');
-const photoEditorForm = document.querySelector('.img-upload__overlay');
-const bodyElement = document.querySelector('body');
-const cancelUploading = document.querySelector('#upload-cancel');
-const formUpload = document.getElementById('upload-select-image');
+import {isEscapeKey, EFFECTS} from './util.js';
 
 // Переменные для масштабирования изображения
 
@@ -15,6 +7,17 @@ const SIZE_MIN = 25;
 const SIZE_MAX = 100;
 const SIZE_STEP = 25;
 let sizeValue = 100;
+
+
+const imgUploadPreview = document.querySelector('.img-upload__preview');
+
+const uploadPhotoInput = document.querySelector('#upload-file');
+const photoEditorForm = document.querySelector('.img-upload__overlay');
+const body = document.querySelector('body');
+const cancelUploading = document.querySelector('#upload-cancel');
+const formUpload = document.getElementById('upload-select-image');
+
+const sliderFieldset = document.querySelector('.img-upload__effect-level');
 
 //Закрытие и открытие окна загрузки
 
@@ -28,11 +31,12 @@ const onUploaderEscapeKeydown = (evt) => {
 
 const closeUploaderFrom = () => {
   photoEditorForm.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
+  body.classList.remove('modal-open');
   uploadPhotoInput.value = '';
   sizeValue = SIZE_VALUE_DEFAULT;
   imgUploadPreview.style.transform = `scale(${1})`;
   imgUploadPreview.className = 'effects__preview--none';
+  imgUploadPreview.style.filter = null;
   document.querySelector('.text__description').value = '';
 
   document.removeEventListener('keydown', onUploaderEscapeKeydown);
@@ -42,7 +46,8 @@ const closeUploaderFrom = () => {
 
 uploadPhotoInput.addEventListener('change', () => {
   photoEditorForm.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
+  sliderFieldset.classList.add('hidden');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onUploaderEscapeKeydown);
   cancelUploading.addEventListener('click', (closeUploaderFrom));
 });
@@ -66,7 +71,7 @@ scaleSmaller.addEventListener('click', () => {
   if (sizeValue > SIZE_MIN) {
     sizeValue -= SIZE_STEP;
     scaleValue.value = `${sizeValue}%`;
-    imgUploadPreview.style.transform = `scale(${sizeValue / 100})`;
+    imgUploadPreview.style.transform = `scale(${sizeValue / SIZE_VALUE_DEFAULT})`;
   }
 });
 
@@ -74,19 +79,50 @@ scaleBigger.addEventListener('click', () => {
   if (sizeValue < SIZE_MAX) {
     sizeValue += SIZE_STEP;
     scaleValue.value = `${sizeValue}%`;
-    imgUploadPreview.style.transform = `scale(${sizeValue / 100})`;
+    imgUploadPreview.style.transform = `scale(${sizeValue / SIZE_VALUE_DEFAULT})`;
   }
 });
 
 // Наложение эффекта на фото
 
 const chosenEffectRadios = document.querySelectorAll('.effects__radio');
+const effectsSlider = document.querySelector('.effect-level__slider');
+const effectLevelInput = document.querySelector('.effect-level__value');
 
 
 for (const radio of chosenEffectRadios) {
   radio.onclick = function () {
     radio.checked = true;
     imgUploadPreview.className = `effects__preview--${radio.value}`;
+    const chosenEffect = EFFECTS.find((effect) => effect.name === radio.value);
+    sliderFieldset.classList.remove('hidden');
+
+    noUiSlider.create(effectsSlider, {
+      range: {
+        min: chosenEffect.min,
+        max: chosenEffect.max,
+      },
+      start: chosenEffect.max,
+      step: chosenEffect.step,
+      connect: 'lower',
+    });
+
+    effectsSlider.noUiSlider.on('update', () => {
+      effectLevelInput.value = effectsSlider.noUiSlider.get();
+      imgUploadPreview.style.filter = `${chosenEffect.filter}(${effectLevelInput.value}${chosenEffect.unit})`;
+
+      if (chosenEffect.name === 'none') {
+        imgUploadPreview.style.filter = null;
+        sliderFieldset.classList.add('hidden');
+      }
+    });
+
+    const destroyExistingSlider = () => {
+      if(effectsSlider.noUiSlider) {
+        effectsSlider.noUiSlider.destroy();
+      }
+    };
+    destroyExistingSlider();
   };
 }
 
@@ -105,17 +141,18 @@ const onAlertEscapeKeydown = (evt) => {
 };
 
 const closeUploadAlert = () => {
-  bodyElement.removeChild(alertMessage);
-  bodyElement.removeChild(alertUploadFragment);
+  alertMessage.remove();
   document.removeEventListener('keydown', onAlertEscapeKeydown);
   document.removeEventListener('click', (closeUploadAlert));
+  document.addEventListener('keydown', onUploaderEscapeKeydown);
+  cancelUploading.addEventListener('click', (closeUploaderFrom));
 };
 
 // Сообщение, которое показывается если произошла ошибка запроса при отправке формы
 
 const showAlert = () => {
-  bodyElement.appendChild(alertMessage);
-  bodyElement.appendChild(alertUploadFragment);
+  body.appendChild(alertMessage);
+  body.appendChild(alertUploadFragment);
 };
 
 const closeAlertMessage = () => {
@@ -141,14 +178,13 @@ const onSuccessEscapeKeydown = (evt) => {
 };
 
 const closeUploadSuccess = () => {
-  bodyElement.removeChild(successMessage);
-  bodyElement.removeChild(successUploadFragment);
+  successMessage.remove();
   document.removeEventListener('keydown', onSuccessEscapeKeydown);
 };
 
 const showSuccess = () => {
-  bodyElement.appendChild(successMessage);
-  bodyElement.appendChild(successUploadFragment);
+  body.appendChild(successMessage);
+  body.appendChild(successUploadFragment);
   const successUploaderButton = document.querySelector('.success__button');
   successUploaderButton.addEventListener('click', (closeUploadSuccess));
   document.addEventListener('keydown', onSuccessEscapeKeydown);

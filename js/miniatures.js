@@ -1,5 +1,7 @@
 import {showAlertMiniatures} from './util.js';
 
+const SIMILAR_PHOTO_OBJECTS_COUNT = 25;
+
 const otherPhotosContainer = document.querySelector('.pictures');
 const otherPhotosTitle = document.querySelector('.pictures__title');
 otherPhotosTitle.classList.remove('visually-hidden');
@@ -22,7 +24,6 @@ const renderSimilarList = (similarPhotoObjects) => {
 };
 
 // отображение миниатюр на главное странице с сервер
-const SIMILAR_PHOTO_OBJECTS_COUNT = 25;
 
 fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
   .then((response) => response.json())

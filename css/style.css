@@ -668,6 +668,11 @@ main {
           filter: brightness(3);
 }
 
+.effects__preview--none {
+  -webkit-filter: none;
+          filter: none;
+}
+
 
 /**
   * Блок добавления хэштегов и комментария к изображению

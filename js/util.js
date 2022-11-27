@@ -6,7 +6,7 @@ const isEscapeKey = function (evt) {
   }
 };
 
-// Если при загрузке данных с сервера произошла ошибка запроса
+// Если при загрузке данных с сервера произошла ошибка запроса
 
 const showAlertMiniatures = (message) => {
   const alertContainer = document.createElement('div');
@@ -25,4 +25,57 @@ const showAlertMiniatures = (message) => {
   document.body.append(alertContainer);
 };
 
-export {isEscapeKey, showAlertMiniatures};
+// интенсивность эффекта
+
+const EFFECTS = [
+  {
+    name: 'none',
+    filter: 'none',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: ''
+  },
+  {
+    name: 'chrome',
+    filter: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  {
+    name: 'sepia',
+    filter: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: ''
+  },
+  {
+    name: 'marvin',
+    filter: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%'
+  },
+  {
+    name: 'phobos',
+    filter: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px'
+  },
+  {
+    name: 'heat',
+    filter: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: ''
+  },
+];
+
+export {isEscapeKey, showAlertMiniatures, EFFECTS};
