@@ -202,7 +202,7 @@ const setFormSubmit = (onSuccess) => {
       const formData = new FormData(evt.target);
 
       fetch(
-        'https://27.javascript.pages.academy/kekstagram-simple',
+        'https://27.javascript.htmlacademy.pro/kekstagram-simple',
         {
           method: 'POST',
           body: formData,

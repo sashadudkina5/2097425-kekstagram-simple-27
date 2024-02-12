@@ -25,7 +25,7 @@ const renderSimilarList = (similarPhotoObjects) => {
 
 // отображение миниатюр на главное странице с сервер
 
-fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
+fetch('https://27.javascript.htmlacademy.pro/kekstagram-simple/data')
   .then((response) => response.json())
   .then((photos) => {
     renderSimilarList(photos.slice(0, SIMILAR_PHOTO_OBJECTS_COUNT));
