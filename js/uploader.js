@@ -10,7 +10,7 @@ let sizeValue = 100;
 
 
 const imgUploadPreview = document.querySelector('.img-upload__preview');
-
+const modalOverlay = document.querySelector('.modal-overlay');
 const uploadPhotoInput = document.querySelector('#upload-file');
 const photoEditorForm = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -31,6 +31,7 @@ const onUploaderEscapeKeydown = (evt) => {
 
 const closeUploaderFrom = () => {
   photoEditorForm.classList.add('hidden');
+  modalOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadPhotoInput.value = '';
   sizeValue = SIZE_VALUE_DEFAULT;
@@ -46,10 +47,12 @@ const closeUploaderFrom = () => {
 
 uploadPhotoInput.addEventListener('change', () => {
   photoEditorForm.classList.remove('hidden');
+  modalOverlay.classList.remove('hidden');
   sliderFieldset.classList.add('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onUploaderEscapeKeydown);
   cancelUploading.addEventListener('click', (closeUploaderFrom));
+  modalOverlay.addEventListener('click', (closeUploaderFrom));
 });
 
 // Валидация комментария

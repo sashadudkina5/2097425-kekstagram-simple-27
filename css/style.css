@@ -103,7 +103,7 @@ main {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
 
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -284,9 +284,11 @@ main {
 
 .img-upload__wrapper {
   margin: 0 auto;
-  padding-bottom: 60px;
   width: 582px;
-
+  position: fixed;
+  z-index: 9;
+  left: 0;
+  right: 0;
   text-align: center;
 }
 
@@ -357,7 +359,7 @@ main {
   -webkit-filter: drop-shadow(0 0 10px #622104);
           filter: drop-shadow(0 0 10px #622104);
 
-  -webkit-transform: scale(1.1);
+  -webkit-transform: scale(1.1);s
       -ms-transform: scale(1.1);
           transform: scale(1.1);
 }
@@ -402,7 +404,7 @@ main {
   position: absolute;
   top: 0;
   left: 50%;
-  z-index: 1;
+  z-index: 2;
 
   font-family: "Open Sans", "Arial", sans-serif;
   font-weight: 400;
@@ -1178,7 +1180,7 @@ main {
 
 .img-upload__message {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: 50%;
   top: 0;
 
@@ -1216,6 +1218,15 @@ main {
   z-index: 10;
 
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .error__inner,
