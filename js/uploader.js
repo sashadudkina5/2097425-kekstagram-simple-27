@@ -1,6 +1,6 @@
 import {isEscapeKey, EFFECTS} from './util.js';
 
-// Переменные для масштабирования изображения
+// Переменные для масштабирования изображения. Backend accepts the max value of 100% only
 
 const SIZE_VALUE_DEFAULT = 100;
 const SIZE_MIN = 25;
@@ -20,7 +20,7 @@ const formUpload = document.getElementById('upload-select-image');
 
 const sliderFieldset = document.querySelector('.img-upload__effect-level');
 
-//consts for zoom change. Backend accepts the max value of 100% only
+//consts for zoom change
 
 const scaleValue = document.querySelector('.scale__control--value');
 const scaleBigger = document.querySelector('.scale__control--bigger');
