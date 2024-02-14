@@ -393,6 +393,18 @@ main {
 .img-upload__preview-container {
   position: relative;
   margin-bottom: 30px;
+  overflow: hidden;
+  width: 600px;
+  height: 600px;
+  background-color: #ffffff;
+  border: solid 3px #ffffff;
+
+}
+
+.uploaded-image {
+  width: 586px;
+  height: 587px;
+  object-fit: contain;
 }
 
 
@@ -514,8 +526,6 @@ main {
 
   width: 600px;
   height: 600px;
-
-  background-color: #ffffff;
 }
 
 .img-upload__preview img {

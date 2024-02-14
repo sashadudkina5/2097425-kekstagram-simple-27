@@ -4,11 +4,12 @@ import {isEscapeKey, EFFECTS} from './util.js';
 
 const SIZE_VALUE_DEFAULT = 100;
 const SIZE_MIN = 25;
-const SIZE_MAX = 100;
+const SIZE_MAX = 200;
 const SIZE_STEP = 25;
 let sizeValue = 100;
 
 
+const uploadedImage = document.querySelector('.uploaded-image');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
 const modalOverlay = document.querySelector('.modal-overlay');
 const uploadPhotoInput = document.querySelector('#upload-file');
@@ -18,6 +19,12 @@ const cancelUploading = document.querySelector('#upload-cancel');
 const formUpload = document.getElementById('upload-select-image');
 
 const sliderFieldset = document.querySelector('.img-upload__effect-level');
+
+//consts for zoom change
+
+const scaleValue = document.querySelector('.scale__control--value');
+const scaleBigger = document.querySelector('.scale__control--bigger');
+const scaleSmaller = document.querySelector('.scale__control--smaller');
 
 //Закрытие и открытие окна загрузки
 
@@ -39,6 +46,7 @@ const closeUploaderFrom = () => {
   imgUploadPreview.className = 'effects__preview--none';
   imgUploadPreview.style.filter = null;
   document.querySelector('.text__description').value = '';
+  uploadedImage.src = null;
 
   document.removeEventListener('keydown', onUploaderEscapeKeydown);
 
@@ -46,6 +54,22 @@ const closeUploaderFrom = () => {
 
 
 uploadPhotoInput.addEventListener('change', () => {
+  const file = uploadPhotoInput.files[0];
+  if (file) {
+    const imageType = /^image\//;
+
+    if (!imageType.test(file.type)) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      uploadedImage.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  scaleValue.value = '100%';
   photoEditorForm.classList.remove('hidden');
   modalOverlay.classList.remove('hidden');
   sliderFieldset.classList.add('hidden');
@@ -64,10 +88,6 @@ const pristine = new Pristine(formUpload, {
 });
 
 // Настройка масштаба изображения
-
-const scaleValue = document.querySelector('.scale__control--value');
-const scaleBigger = document.querySelector('.scale__control--bigger');
-const scaleSmaller = document.querySelector('.scale__control--smaller');
 
 
 scaleSmaller.addEventListener('click', () => {
