@@ -4,7 +4,7 @@ import {isEscapeKey, EFFECTS} from './util.js';
 
 const SIZE_VALUE_DEFAULT = 100;
 const SIZE_MIN = 25;
-const SIZE_MAX = 200;
+const SIZE_MAX = 100;
 const SIZE_STEP = 25;
 let sizeValue = 100;
 
@@ -20,7 +20,7 @@ const formUpload = document.getElementById('upload-select-image');
 
 const sliderFieldset = document.querySelector('.img-upload__effect-level');
 
-//consts for zoom change
+//consts for zoom change. Backend accepts the max value of 100% only
 
 const scaleValue = document.querySelector('.scale__control--value');
 const scaleBigger = document.querySelector('.scale__control--bigger');
@@ -87,7 +87,7 @@ const pristine = new Pristine(formUpload, {
   errorTextClass: 'img-upload__error-text',
 });
 
-// Настройка масштаба изображения
+// Scaling picture. Backend accepts the max value of 100% only
 
 
 scaleSmaller.addEventListener('click', () => {
