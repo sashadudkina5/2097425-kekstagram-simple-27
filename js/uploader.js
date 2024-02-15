@@ -1,4 +1,4 @@
-import {isEscapeKey, EFFECTS} from './util.js';
+import { isEscapeKey, EFFECTS } from './util.js';
 
 // Переменные для масштабирования изображения. Backend accepts the max value of 100% only
 
@@ -7,7 +7,6 @@ const SIZE_MIN = 25;
 const SIZE_MAX = 100;
 const SIZE_STEP = 25;
 let sizeValue = 100;
-
 
 const uploadedImage = document.querySelector('.uploaded-image');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
@@ -28,7 +27,6 @@ const scaleSmaller = document.querySelector('.scale__control--smaller');
 
 //Закрытие и открытие окна загрузки
 
-
 const onUploaderEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -36,7 +34,7 @@ const onUploaderEscapeKeydown = (evt) => {
   }
 };
 
-const closeUploaderFrom = () => {
+function closeUploaderFrom() {
   photoEditorForm.classList.add('hidden');
   modalOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -49,9 +47,7 @@ const closeUploaderFrom = () => {
   uploadedImage.src = null;
 
   document.removeEventListener('keydown', onUploaderEscapeKeydown);
-
-};
-
+}
 
 uploadPhotoInput.addEventListener('change', () => {
   const file = uploadPhotoInput.files[0];
@@ -75,8 +71,8 @@ uploadPhotoInput.addEventListener('change', () => {
   sliderFieldset.classList.add('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onUploaderEscapeKeydown);
-  cancelUploading.addEventListener('click', (closeUploaderFrom));
-  modalOverlay.addEventListener('click', (closeUploaderFrom));
+  cancelUploading.addEventListener('click', closeUploaderFrom);
+  modalOverlay.addEventListener('click', closeUploaderFrom);
 });
 
 // Валидация комментария
@@ -89,12 +85,13 @@ const pristine = new Pristine(formUpload, {
 
 // Scaling picture. Backend accepts the max value of 100% only
 
-
 scaleSmaller.addEventListener('click', () => {
   if (sizeValue > SIZE_MIN) {
     sizeValue -= SIZE_STEP;
     scaleValue.value = `${sizeValue}%`;
-    imgUploadPreview.style.transform = `scale(${sizeValue / SIZE_VALUE_DEFAULT})`;
+    imgUploadPreview.style.transform = `scale(${
+      sizeValue / SIZE_VALUE_DEFAULT
+    })`;
   }
 });
 
@@ -102,7 +99,9 @@ scaleBigger.addEventListener('click', () => {
   if (sizeValue < SIZE_MAX) {
     sizeValue += SIZE_STEP;
     scaleValue.value = `${sizeValue}%`;
-    imgUploadPreview.style.transform = `scale(${sizeValue / SIZE_VALUE_DEFAULT})`;
+    imgUploadPreview.style.transform = `scale(${
+      sizeValue / SIZE_VALUE_DEFAULT
+    })`;
   }
 });
 
@@ -111,7 +110,6 @@ scaleBigger.addEventListener('click', () => {
 const chosenEffectRadios = document.querySelectorAll('.effects__radio');
 const effectsSlider = document.querySelector('.effect-level__slider');
 const effectLevelInput = document.querySelector('.effect-level__value');
-
 
 for (const radio of chosenEffectRadios) {
   radio.onclick = function () {
@@ -141,7 +139,7 @@ for (const radio of chosenEffectRadios) {
     });
 
     const destroyExistingSlider = () => {
-      if(effectsSlider.noUiSlider) {
+      if (effectsSlider.noUiSlider) {
         effectsSlider.noUiSlider.destroy();
       }
     };
@@ -152,9 +150,10 @@ for (const radio of chosenEffectRadios) {
 // Закрытие окна об ошибке при загрузке изображения
 
 const alertUploadFragment = document.createDocumentFragment();
-const alertUploadTemplate = document.querySelector('#error').content.querySelector('.error');
+const alertUploadTemplate = document
+  .querySelector('#error')
+  .content.querySelector('.error');
 const alertMessage = alertUploadTemplate.cloneNode(true);
-
 
 const onAlertEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -163,13 +162,13 @@ const onAlertEscapeKeydown = (evt) => {
   }
 };
 
-const closeUploadAlert = () => {
+function closeUploadAlert() {
   alertMessage.remove();
   document.removeEventListener('keydown', onAlertEscapeKeydown);
-  document.removeEventListener('click', (closeUploadAlert));
+  document.removeEventListener('click', closeUploadAlert);
   document.addEventListener('keydown', onUploaderEscapeKeydown);
-  cancelUploading.addEventListener('click', (closeUploaderFrom));
-};
+  cancelUploading.addEventListener('click', closeUploaderFrom);
+}
 
 // Сообщение, которое показывается если произошла ошибка запроса при отправке формы
 
@@ -180,17 +179,19 @@ const showAlert = () => {
 
 const closeAlertMessage = () => {
   const errorUploaderButton = document.querySelector('.error__button');
-  errorUploaderButton.addEventListener('click', (closeUploadAlert));
-  document.addEventListener('keydown', (onAlertEscapeKeydown));
+  errorUploaderButton.addEventListener('click', closeUploadAlert);
+  document.addEventListener('keydown', onAlertEscapeKeydown);
   document.removeEventListener('keydown', onUploaderEscapeKeydown);
-  cancelUploading.removeEventListener('click', (closeUploaderFrom));
-  document.addEventListener('click', (closeUploadAlert));
+  cancelUploading.removeEventListener('click', closeUploaderFrom);
+  document.addEventListener('click', closeUploadAlert);
 };
 
 // Сообщение об успешной отпрвке формы
 
 const successUploadFragment = document.createDocumentFragment();
-const successUploadTemplate = document.querySelector('#success').content.querySelector('.success');
+const successUploadTemplate = document
+  .querySelector('#success')
+  .content.querySelector('.success');
 const successMessage = successUploadTemplate.cloneNode(true);
 
 const onSuccessEscapeKeydown = (evt) => {
@@ -200,18 +201,18 @@ const onSuccessEscapeKeydown = (evt) => {
   }
 };
 
-const closeUploadSuccess = () => {
+function closeUploadSuccess() {
   successMessage.remove();
   document.removeEventListener('keydown', onSuccessEscapeKeydown);
-};
+}
 
 const showSuccess = () => {
   body.appendChild(successMessage);
   body.appendChild(successUploadFragment);
   const successUploaderButton = document.querySelector('.success__button');
-  successUploaderButton.addEventListener('click', (closeUploadSuccess));
+  successUploaderButton.addEventListener('click', closeUploadSuccess);
   document.addEventListener('keydown', onSuccessEscapeKeydown);
-  document.addEventListener('click', (closeUploadSuccess));
+  document.addEventListener('click', closeUploadSuccess);
 };
 
 // Отправка формы на сервер
@@ -224,19 +225,15 @@ const setFormSubmit = (onSuccess) => {
     if (isValid) {
       const formData = new FormData(evt.target);
 
-      fetch(
-        'https://27.javascript.htmlacademy.pro/kekstagram-simple',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
+      fetch('https://27.javascript.htmlacademy.pro/kekstagram-simple', {
+        method: 'POST',
+        body: formData,
+      })
         .then((response) => {
           if (response.ok) {
             onSuccess();
             showSuccess();
             closeUploaderFrom();
-
           } else {
             showAlert();
             closeAlertMessage();
@@ -250,4 +247,4 @@ const setFormSubmit = (onSuccess) => {
   });
 };
 
-export {setFormSubmit, closeUploaderFrom};
+export { setFormSubmit, closeUploaderFrom };
