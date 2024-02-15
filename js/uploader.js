@@ -41,7 +41,11 @@ function closeUploaderFrom() {
   uploadPhotoInput.value = '';
   sizeValue = SIZE_VALUE_DEFAULT;
   imgUploadPreview.style.transform = `scale(${1})`;
-  imgUploadPreview.className = 'effects__preview--none';
+  imgUploadPreview.classList.remove(
+    ...imgUploadPreview.classList.value
+      .split(' ')
+      .filter((cls) => cls.startsWith('effects__preview--'))
+  );
   imgUploadPreview.style.filter = null;
   document.querySelector('.text__description').value = '';
   uploadedImage.src = null;
@@ -114,9 +118,21 @@ const effectLevelInput = document.querySelector('.effect-level__value');
 for (const radio of chosenEffectRadios) {
   radio.onclick = function () {
     radio.checked = true;
-    imgUploadPreview.className = `effects__preview--${radio.value}`;
+    imgUploadPreview.classList.remove(
+      ...imgUploadPreview.classList.value
+        .split(' ')
+        .filter((cls) => cls.startsWith('effects__preview--'))
+    );
+    imgUploadPreview.classList.add(`effects__preview--${radio.value}`);
     const chosenEffect = EFFECTS.find((effect) => effect.name === radio.value);
     sliderFieldset.classList.remove('hidden');
+
+    const destroyExistingSlider = () => {
+      if (effectsSlider.noUiSlider) {
+        effectsSlider.noUiSlider.destroy();
+      }
+    };
+    destroyExistingSlider();
 
     noUiSlider.create(effectsSlider, {
       range: {
@@ -137,13 +153,6 @@ for (const radio of chosenEffectRadios) {
         sliderFieldset.classList.add('hidden');
       }
     });
-
-    const destroyExistingSlider = () => {
-      if (effectsSlider.noUiSlider) {
-        effectsSlider.noUiSlider.destroy();
-      }
-    };
-    destroyExistingSlider();
   };
 }
 
