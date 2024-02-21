@@ -1,6 +1,7 @@
 import { isEscapeKey, EFFECTS } from './util.js';
+import {BASE_URL} from './api-URLs.js';
 
-// Переменные для масштабирования изображения. Backend accepts the max value of 100% only
+// Consts for scaling photos. Backend accepts the max value of 100% only
 
 const SIZE_VALUE_DEFAULT = 100;
 const SIZE_MIN = 25;
@@ -25,7 +26,7 @@ const scaleValue = document.querySelector('.scale__control--value');
 const scaleBigger = document.querySelector('.scale__control--bigger');
 const scaleSmaller = document.querySelector('.scale__control--smaller');
 
-//Закрытие и открытие окна загрузки
+//Opening and closing upload modal
 
 const onUploaderEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -79,7 +80,7 @@ uploadPhotoInput.addEventListener('change', () => {
   modalOverlay.addEventListener('click', closeUploaderFrom);
 });
 
-// Валидация комментария
+// Comment validation
 
 const pristine = new Pristine(formUpload, {
   classTo: 'img-upload__text',
@@ -109,7 +110,7 @@ scaleBigger.addEventListener('click', () => {
   }
 });
 
-// Наложение эффекта на фото
+// Implementing filters and changing their intensity
 
 const chosenEffectRadios = document.querySelectorAll('.effects__radio');
 const effectsSlider = document.querySelector('.effect-level__slider');
@@ -156,7 +157,7 @@ for (const radio of chosenEffectRadios) {
   };
 }
 
-// Закрытие окна об ошибке при загрузке изображения
+// Closing uploading error modal
 
 const alertUploadFragment = document.createDocumentFragment();
 const alertUploadTemplate = document
@@ -179,7 +180,7 @@ function closeUploadAlert() {
   cancelUploading.addEventListener('click', closeUploaderFrom);
 }
 
-// Сообщение, которое показывается если произошла ошибка запроса при отправке формы
+// Upload request error message
 
 const showAlert = () => {
   body.appendChild(alertMessage);
@@ -195,7 +196,7 @@ const closeAlertMessage = () => {
   document.addEventListener('click', closeUploadAlert);
 };
 
-// Сообщение об успешной отпрвке формы
+// Succesful upload message
 
 const successUploadFragment = document.createDocumentFragment();
 const successUploadTemplate = document
@@ -224,7 +225,7 @@ const showSuccess = () => {
   document.addEventListener('click', closeUploadSuccess);
 };
 
-// Отправка формы на сервер
+// Uploading data to the server
 
 const setFormSubmit = (onSuccess) => {
   formUpload.addEventListener('submit', (evt) => {
@@ -234,7 +235,7 @@ const setFormSubmit = (onSuccess) => {
     if (isValid) {
       const formData = new FormData(evt.target);
 
-      fetch('https://27.javascript.htmlacademy.pro/kekstagram-simple', {
+      fetch(BASE_URL, {
         method: 'POST',
         body: formData,
       })

@@ -1,4 +1,4 @@
-// вспомогательная функция для закрытия окна по клавише Esc
+// closing modals with key ESC
 
 const isEscapeKey = function (evt) {
   if (evt.key === 'Escape') {
@@ -6,7 +6,7 @@ const isEscapeKey = function (evt) {
   }
 };
 
-// Если при загрузке данных с сервера произошла ошибка запроса
+// showing error modals
 
 const showAlertMiniatures = (message) => {
   const alertContainer = document.createElement('div');
@@ -25,7 +25,7 @@ const showAlertMiniatures = (message) => {
   document.body.append(alertContainer);
 };
 
-// интенсивность эффекта
+// Filters intensity
 
 const EFFECTS = [
   {

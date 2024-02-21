@@ -1,4 +1,5 @@
 import {showAlertMiniatures} from './util.js';
+import {BASE_URL} from './api-URLs.js';
 
 const SIMILAR_PHOTO_OBJECTS_COUNT = 25;
 
@@ -23,9 +24,9 @@ const renderSimilarList = (similarPhotoObjects) => {
   otherPhotosContainer.appendChild(similarPhotoObjectsFragment);
 };
 
-// отображение миниатюр на главное странице с сервер
+// pictures fetched from the server
 
-fetch('https://27.javascript.htmlacademy.pro/kekstagram-simple/data')
+fetch(`${BASE_URL}/data`)
   .then((response) => response.json())
   .then((photos) => {
     renderSimilarList(photos.slice(0, SIMILAR_PHOTO_OBJECTS_COUNT));

@@ -1,51 +1,47 @@
-# Личный проект «Кекстаграм (простой)»
+# Kekstagram
 
-* Студент: [Александра Дудкина](https://up.htmlacademy.ru/javascript/27/user/2097425).
-* Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
+Kekstagram is a web-based photo editing and sharing application developed as a personal study project. This project was  based on the repository [https://github.com/htmlacademy-javascript/2097425-kekstagram-simple-27](https://github.com/htmlacademy-javascript/2097425-kekstagram-simple-27). HTML and CSS foundations were provided, while all JavaScript functionalities were implemented independently. The main focus during the study process was on JavaScript, particularly on DOM manipulations and working with event listeners.
 
----
+## Overview
 
-_Не удаляйте и не изменяйте самовольно файлы и папки:_
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`., `.github`_
+Kekstagram offers a platform for editing and sharing photos online. Users can leverage features such as filters, scaling down images, commenting, and sharing to the server.
 
----
+## Features
 
-[Как работать с Git на проекте](Contributing.md) | [Как работать над проектом](Workflow.md)
+- **Filter Application**: Apply a variety of filters, with the option to adjust filter intensity.
+- **Scaling Down**: Resize images. (Please note that scaling up an image is technically impossible as the backend server doesn't accept zoomed-in photos.)
+- **Error Handling**: Handling network errors.
+- **Comment Section**: Implemented with Pristine to control minimum and maximum comment length.
+- **Server Sharing**: Sharing is implemented with Fetch API and validated with Pristine.
 
-### Памятка
+## Technologies Used
 
-#### 1. Зарегистрируйтесь на Гитхабе
+- **noUiSlider**: Utilized for implementing intuitive slider controls to adjust filter intensity.
+- **Pristine**: Integrated for form validation to ensure data integrity and enhance user input experience.
+- **Fetch API**: Employed for making asynchronous HTTP requests to fetch and share data with the server.
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
+## Available Scripts
 
-#### 2. Создайте форк
+In the project directory, you can run:
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+### `npm start`
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275222-1d624452-0050-11e8-8aca-06d2832724ce.png">
+Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
 
-Получится вот так:
+### `npm lint`
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275223-1d7cf9fa-0050-11e8-829b-98ac3c9a4f8b.png">
+This script utilizes ESLint, a static code analysis tool, to ensure code quality and adherence to coding standards. Running `npm lint` will analyze your JavaScript codebase and provide feedback on any potential issues or violations.
 
-#### 3. Клонируйте репозиторий на свой компьютер
+## Getting Started
 
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
+To get started with Kekstagram, follow these steps:
 
-<img width="769" alt="" src="https://user-images.githubusercontent.com/10909/35275224-1d97a7dc-0050-11e8-89f9-41c9a7b2ae9c.png">
+1. Clone this repository to your local machine.
+2. Navigate to the project directory.
+3. Run `npm install` to install project dependencies.
+4. Start the development server by running `npm start`.
+5. Open your web browser and visit [http://localhost:3000](http://localhost:3000) to access the application.
 
-Клонировать репозиторий можно так:
+## Access the Web App
 
-```
-git clone SSH-адрес_вашего_форка
-```
-
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
-
----
-
-<a href="https://htmlacademy.ru/intensive/javascript"><img align="left" width="50" height="50" alt="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/javascript/logo-for-github-2.png"></a>
-
-Репозиторий создан для обучения на интенсивном онлайн‑курсе «[JavaScript. Профессиональная разработка веб-интерфейсов](https://htmlacademy.ru/intensive/javascript)» от [HTML Academy](https://htmlacademy.ru).
+To access Kekstagram, visit the following link: [Kekstagram Web App](https://sashadudkina5.github.io/2097425-kekstagram-simple-27/)
