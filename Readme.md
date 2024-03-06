@@ -13,6 +13,7 @@ Kekstagram offers a platform for editing and sharing photos online. Users can le
 - **Error Handling**: Handling network errors.
 - **Comment Section**: Implemented with Pristine to control minimum and maximum comment length.
 - **Server Sharing**: Sharing is implemented with Fetch API and validated with Pristine.
+- **Comprehensive Documentation**: The project is documented with JSDoc, covering all functions to facilitate understanding and ease future development. This includes detailed descriptions of functionalities, parameters, and return values.
 
 ## Technologies Used
 
