@@ -1,13 +1,18 @@
-// closing modals with key ESC
-
+/**
+ * Checks if the pressed key is the Escape key.
+ * @param {KeyboardEvent} evt - The keyboard event that triggered the function.
+ * @returns {boolean} True if the pressed key is 'Escape', otherwise undefined.
+ */
 const isEscapeKey = function (evt) {
   if (evt.key === 'Escape') {
     return true;
   }
 };
 
-// showing error modals
-
+/**
+ * Displays a modal alert with a custom message at the bottom of the page.
+ * @param {string} message - The message to display in the alert modal.
+ */
 const showAlertMiniatures = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -25,8 +30,12 @@ const showAlertMiniatures = (message) => {
   document.body.append(alertContainer);
 };
 
-// Filters intensity
 
+/**
+ * Definitions for various filter effects that can be applied to images.
+ * Each effect has a name, CSS filter function, and range of values with step increments.
+ * @type {Array.<{name: string, filter: string, min: number, max: number, step: number, unit: string}>}
+ */
 const EFFECTS = [
   {
     name: 'none',

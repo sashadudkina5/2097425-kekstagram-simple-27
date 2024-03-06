@@ -1,14 +1,19 @@
 import { isEscapeKey, EFFECTS } from './util.js';
 import {BASE_URL} from './api-URLs.js';
 
-// Consts for scaling photos. Backend accepts the max value of 100% only
 
+// Constants for scaling photos. The backend accepts a maximum value of 100% only.
 const SIZE_VALUE_DEFAULT = 100;
 const SIZE_MIN = 25;
 const SIZE_MAX = 100;
 const SIZE_STEP = 25;
+
+/**
+ * Current size of the picture
+ */
 let sizeValue = 100;
 
+// DOM element selectors
 const uploadedImage = document.querySelector('.uploaded-image');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
 const modalOverlay = document.querySelector('.modal-overlay');
@@ -17,17 +22,16 @@ const photoEditorForm = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const cancelUploading = document.querySelector('#upload-cancel');
 const formUpload = document.getElementById('upload-select-image');
-
 const sliderFieldset = document.querySelector('.img-upload__effect-level');
-
-//consts for zoom change
-
 const scaleValue = document.querySelector('.scale__control--value');
 const scaleBigger = document.querySelector('.scale__control--bigger');
 const scaleSmaller = document.querySelector('.scale__control--smaller');
 
-//Opening and closing upload modal
 
+/**
+ * Closes to uploader modal when ESC key is pressed.
+ * @param {KeyboardEvent} evt - The keyboard event triggered by user action.
+ */
 const onUploaderEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -35,6 +39,9 @@ const onUploaderEscapeKeydown = (evt) => {
   }
 };
 
+/**
+ * Closes the uploader form and resets the initial application state.
+ */
 function closeUploaderFrom() {
   photoEditorForm.classList.add('hidden');
   modalOverlay.classList.add('hidden');
@@ -54,6 +61,9 @@ function closeUploaderFrom() {
   document.removeEventListener('keydown', onUploaderEscapeKeydown);
 }
 
+/**
+ * Initializes photo upload and setups event listeners for user interactions.
+ */
 uploadPhotoInput.addEventListener('change', () => {
   const file = uploadPhotoInput.files[0];
   if (file) {
@@ -80,16 +90,19 @@ uploadPhotoInput.addEventListener('change', () => {
   modalOverlay.addEventListener('click', closeUploaderFrom);
 });
 
-// Comment validation
 
+/**
+ * Validates comment input in the upload form.
+ */
 const pristine = new Pristine(formUpload, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'img-upload__error-text',
 });
 
-// Scaling picture. Backend accepts the max value of 100% only
-
+/**
+ * Scales the picture down within defined constraints. The backend accepts a maximum value of 100% only.
+ */
 scaleSmaller.addEventListener('click', () => {
   if (sizeValue > SIZE_MIN) {
     sizeValue -= SIZE_STEP;
@@ -100,6 +113,9 @@ scaleSmaller.addEventListener('click', () => {
   }
 });
 
+/**
+ * Scales the picture up within defined constraints. The backend accepts a maximum value of 100% only.
+ */
 scaleBigger.addEventListener('click', () => {
   if (sizeValue < SIZE_MAX) {
     sizeValue += SIZE_STEP;
@@ -110,12 +126,12 @@ scaleBigger.addEventListener('click', () => {
   }
 });
 
-// Implementing filters and changing their intensity
-
+// Selectors for implementing filters and changing their intensity
 const chosenEffectRadios = document.querySelectorAll('.effects__radio');
 const effectsSlider = document.querySelector('.effect-level__slider');
 const effectLevelInput = document.querySelector('.effect-level__value');
 
+// NoUiSlider functionlaity
 for (const radio of chosenEffectRadios) {
   radio.onclick = function () {
     radio.checked = true;
@@ -157,7 +173,6 @@ for (const radio of chosenEffectRadios) {
   };
 }
 
-// Closing uploading error modal
 
 const alertUploadFragment = document.createDocumentFragment();
 const alertUploadTemplate = document
@@ -165,6 +180,10 @@ const alertUploadTemplate = document
   .content.querySelector('.error');
 const alertMessage = alertUploadTemplate.cloneNode(true);
 
+/**
+ *  Closes to uploader error alert modal when ESC key is pressed.
+ * @param {KeyboardEvent} evt - The keyboard event triggered by user action.
+ */
 const onAlertEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -172,6 +191,9 @@ const onAlertEscapeKeydown = (evt) => {
   }
 };
 
+/**
+ * Closes the upload error alert modal.
+ */
 function closeUploadAlert() {
   alertMessage.remove();
   document.removeEventListener('keydown', onAlertEscapeKeydown);
@@ -180,13 +202,17 @@ function closeUploadAlert() {
   cancelUploading.addEventListener('click', closeUploaderFrom);
 }
 
-// Upload request error message
-
+/**
+ * Displays an alert message for upload errors.
+ */
 const showAlert = () => {
   body.appendChild(alertMessage);
   body.appendChild(alertUploadFragment);
 };
 
+/**
+ * Sets up event listeners for closing the alert message modal.
+ */
 const closeAlertMessage = () => {
   const errorUploaderButton = document.querySelector('.error__button');
   errorUploaderButton.addEventListener('click', closeUploadAlert);
@@ -196,14 +222,16 @@ const closeAlertMessage = () => {
   document.addEventListener('click', closeUploadAlert);
 };
 
-// Succesful upload message
-
 const successUploadFragment = document.createDocumentFragment();
 const successUploadTemplate = document
   .querySelector('#success')
   .content.querySelector('.success');
 const successMessage = successUploadTemplate.cloneNode(true);
 
+/**
+ *  Closes to uploader success modal when ESC key is pressed.
+ * @param {KeyboardEvent} evt - The keyboard event triggered by user action.
+ */
 const onSuccessEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -211,11 +239,16 @@ const onSuccessEscapeKeydown = (evt) => {
   }
 };
 
+/**
+ * Closes the upload success message modal.
+ */
 function closeUploadSuccess() {
   successMessage.remove();
   document.removeEventListener('keydown', onSuccessEscapeKeydown);
 }
-
+/**
+ * Displays a success message upon successful upload.
+ */
 const showSuccess = () => {
   body.appendChild(successMessage);
   body.appendChild(successUploadFragment);
@@ -225,8 +258,10 @@ const showSuccess = () => {
   document.addEventListener('click', closeUploadSuccess);
 };
 
-// Uploading data to the server
-
+/**
+ * Submits the photo upload form data to the server and handles the response.
+ * @param {Function} onSuccess - Callback function to execute on successful form submission.
+ */
 const setFormSubmit = (onSuccess) => {
   formUpload.addEventListener('submit', (evt) => {
     evt.preventDefault();
