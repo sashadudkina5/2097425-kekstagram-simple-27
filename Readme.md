@@ -45,4 +45,4 @@ To get started with Kekstagram, follow these steps:
 
 ## Access the Web App
 
-To access Kekstagram, visit the following link: [Kekstagram Web App](https://sashadudkina5.github.io/2097425-kekstagram-simple-27/)
+To access Kekstagram, visit the following link: [Kekstagram Web App](https://sashadudkina5.github.io/Kekstagram_PhotoApp/)
